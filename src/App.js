@@ -3,17 +3,16 @@ import { useState, useRef, useEffect } from "react";
 function Counter() {
   const [count, setCount] = useState(0);
 
-  function handleAlertClick() {
+  useEffect(() => {
     setTimeout(() => {
-      alert("You clicked on: " + count);
+      console.log(`You clicked ${count} times`);
     }, 3000);
-  }
+  });
 
   return (
     <div>
       <p>You clicked {count} times</p>
       <button onClick={() => setCount(count + 1)}>Click me</button>
-      <button onClick={handleAlertClick}>Show alert</button>
     </div>
   );
 }
