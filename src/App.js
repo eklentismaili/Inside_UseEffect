@@ -1,31 +1,23 @@
 import { useState, useRef, useEffect } from "react";
 
-function VideoPlayer({ src, isPlaying }) {
-  const ref = useRef(null);
+function Counter() {
+  const [count, setCount] = useState(0);
+  console.log("here", count);
 
   useEffect(() => {
-    if (isPlaying) {
-      ref.current.play();
-    } else {
-      ref.current.pause();
-    }
-    // Only after the Rendering has finnished and DOM is updated this effect runs
-  });
+    const id = setInterval(() => {
+      setCount(count + 1);
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
 
-  return <video ref={ref} src={src} loop playsInline />;
+  return <h1>{count}</h1>;
 }
 
 export default function App() {
-  const [isPlaying, setIsPlaying] = useState(false);
   return (
     <>
-      <button onClick={() => setIsPlaying(!isPlaying)}>
-        {isPlaying ? "Pause" : "Play"}
-      </button>
-      <VideoPlayer
-        isPlaying={isPlaying}
-        src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-      />
+      <Counter />
     </>
   );
 }
