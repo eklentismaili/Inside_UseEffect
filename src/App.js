@@ -3,11 +3,14 @@ import { useState, useRef, useEffect } from "react";
 function VideoPlayer({ src, isPlaying }) {
   const ref = useRef(null);
 
-  if (isPlaying) {
-    ref.current.play(); // Calling these while rendering isn't allowed.
-  } else {
-    ref.current.pause(); // Also, this crashes.
-  }
+  useEffect(() => {
+    if (isPlaying) {
+      ref.current.play();
+    } else {
+      ref.current.pause();
+    }
+    // Only after the Rendering has finnished and DOM is updated this effect runs
+  });
 
   return <video ref={ref} src={src} loop playsInline />;
 }
