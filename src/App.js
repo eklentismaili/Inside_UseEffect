@@ -1,18 +1,33 @@
 import { useState, useRef, useEffect } from "react";
 
 function Counter() {
-  const [count, setCount] = useState(0);
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [fullName, setFullName] = useState("");
 
   useEffect(() => {
-    setTimeout(() => {
-      console.log(`You clicked ${count} times`);
-    }, 3000);
-  });
+    setFullName(firstName + " " + lastName);
+  }, [firstName, lastName]);
+
+  /* const fullName = firstName + " " + lastName */
+
+  // No extra state, No extra rerender kur first/lastName change, Its not a SIDE EFFECT but a pure CALCULATION
 
   return (
     <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>Click me</button>
+      <p>Full Name: {fullName}</p>
+      <input
+        type="text"
+        value={firstName}
+        placeholder="First Name"
+        onChange={(e) => setFirstName(e.target.value)}
+      />
+      <input
+        type="text"
+        value={lastName}
+        placeholder="Last Name"
+        onChange={(e) => setLastName(e.target.value)}
+      />
     </div>
   );
 }
@@ -24,9 +39,3 @@ export default function App() {
     </>
   );
 }
-
-/* The reason this code isn’t correct is that it tries to do something with the DOM node during rendering. 
-In React, rendering should be a pure calculation of JSX and should not contain side effects like modifying the DOM.
-
-Moreover, when VideoPlayer is called for the first time, its DOM does not exist yet! 
-There isn’t a DOM node yet to call play() or pause() on, because React doesn’t know what DOM to create until after you return the JSX. */
